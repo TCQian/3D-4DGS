@@ -70,5 +70,24 @@ This project builds upon:
 ```
 
 ## SOC Cluster installation steps
+Run these in a GPU instance cluster:
+```
+salloc -G h100-47
 ```
 
+Then run these installation:
+```
+conda create -n 3d4dgs python=3.10 -y
+conda activate 3d4dgs
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+export CUDA_HOME=/usr/local/cuda-12.6 && export PATH=$CUDA_HOME/bin:$PATH
+pip install ./simple-knn/ --no-build-isolation (must insert `#include <float.h>` in `simple-knn/simple_knn.cu`)
+pip install ./pointops2/ --no-build-isolation
+pip install tqdm mediapy torchmetrics imagesize kornia omegaconf lpips opencv-python
+```
+
+I have colmap built, so i can use colmap like this:
+```
+export PATH=/home/e/e0407638/miniconda3/envs/colmap/bin:$PATH
+colmap
+```
