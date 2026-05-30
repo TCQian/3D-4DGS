@@ -99,7 +99,7 @@ def generate_images_txt_from_database(db_path, colmap_workspace):
         for image_id, name in image_info:
             cursor.execute("SELECT * FROM cameras WHERE camera_id = (SELECT camera_id FROM images WHERE image_id = ?)", (image_id,))
             camera_info = cursor.fetchone()
-            pose = fname2pose[name]
+            pose = fname2pose[os.path.basename(name)]
             R = np.linalg.inv(pose[:3, :3])
             T = -np.matmul(R, pose[:3, 3])
             q0 = 0.5 * math.sqrt(1 + R[0, 0] + R[1, 1] + R[2, 2])
