@@ -68,3 +68,7 @@ This project builds upon:
   year={2025}
 }
 ```
+
+## SOC Cluster installation steps
+```
+

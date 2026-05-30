@@ -114,16 +114,10 @@ def generate_images_txt_from_database(db_path, colmap_workspace):
     conn.close()
 
 def array_to_blob(array):
-    if IS_PYTHON3:
-        return array.tostring()
-    else:
-        return np.getbuffer(array)
+    return array.tobytes()
 
 def blob_to_array(blob, dtype, shape=(-1,)):
-    if IS_PYTHON3:
-        return np.fromstring(blob, dtype=dtype).reshape(*shape)
-    else:
-        return np.frombuffer(blob, dtype=dtype).reshape(*shape)
+    return np.frombuffer(blob, dtype=dtype).reshape(*shape)
 
 class COLMAPDatabase(sqlite3.Connection):
 
@@ -450,6 +444,8 @@ if __name__ == '__main__':
                 --output_path {os.path.join(args.path, 'points3d.ply')}")
     
     shutil.rmtree(colmap_workspace)
-    os.remove(os.path.join(args.path, 'points3d.ply.vis'))
+    vis_file = os.path.join(args.path, 'points3d.ply.vis')
+    if os.path.exists(vis_file):
+        os.remove(vis_file)
     
     print(f"[INFO] Initial point cloud is saved in {os.path.join(args.path, 'points3d.ply')}.")
