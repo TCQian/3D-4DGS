@@ -385,7 +385,7 @@ if __name__ == '__main__':
                 
     os.makedirs(os.path.join(colmap_workspace, 'images'), exist_ok=True)
     for fname in fname2pose.keys():
-        os.symlink(os.path.abspath(os.path.join(images_path, fname)), os.path.join(colmap_workspace, 'images', fname))
+        shutil.copy2(os.path.join(images_path, fname), os.path.join(colmap_workspace, 'images', fname))
                 
     with open(os.path.join(colmap_workspace, 'created/sparse/images.txt'), 'w') as f:
         idx = 1
