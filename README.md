@@ -83,7 +83,8 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
 export CUDA_HOME=/usr/local/cuda-12.6 && export PATH=$CUDA_HOME/bin:$PATH
 pip install ./simple-knn/ --no-build-isolation (must insert `#include <float.h>` in `simple-knn/simple_knn.cu`)
 pip install ./pointops2/ --no-build-isolation
-pip install tqdm mediapy torchmetrics imagesize kornia omegaconf lpips opencv-python
+pip install plyfile tqdm mediapy torchmetrics imagesize kornia omegaconf lpips opencv-python
+conda install ninja (required by diff-gaussian-rasterization)
 ```
 
 I have colmap built, so i can use colmap like this:

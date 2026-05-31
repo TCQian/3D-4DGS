@@ -118,7 +118,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
     gaussians.env_map = env_map
         
     training_dataset = scene.getTrainCameras()
-    training_dataloader = DataLoader(training_dataset, batch_size=batch_size, shuffle=True, num_workers=12 if dataset.dataloader else 0, collate_fn=lambda x: x, drop_last=True)
+    training_dataloader = DataLoader(training_dataset, batch_size=batch_size, shuffle=True, num_workers=2 if dataset.dataloader else 0, collate_fn=lambda x: x, drop_last=True)
      
     iteration = first_iter
 
