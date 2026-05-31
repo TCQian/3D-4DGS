@@ -10,5 +10,5 @@
 source ~/.bashrc
 conda activate 3d4dgs
 
-export PATH=/home/e/e0407638/miniconda3/envs/colmap/bin:$PATH
-python scripts/n3v2blender.py ./dataset/coffee_martini
+export PATH=$PATH:/home/e/e0407638/miniconda3/envs/colmap/bin
+python scripts/n3v2blender.py ./dataset/flame_salmon_1

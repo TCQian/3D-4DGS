@@ -5,9 +5,9 @@
 #SBATCH --gres=gpu:h100-47:1
 #SBATCH --mail-type=ALL                  # Get email for all status updates
 #SBATCH --mail-user=e0407638@u.nus.edu   # Email for notifications
-#SBATCH --mem=16G                        # Request 16GB of memory
+#SBATCH --mem=32G                        # Request 32GB of memory
 
 source ~/.bashrc
 conda activate 3d4dgs
 
-python main.py --config configs/n3v/default.yaml --model_path ./output/coffee_martini --source_path ./dataset/coffee_martini
+python main.py --config configs/n3v/default.yaml --model_path ./output/flame_salmon_1 --source_path ./dataset/flame_salmon_1
