@@ -22,7 +22,7 @@ ModelParams:
   num_extra_pts: 0
   loaded_pth: ""
   frame_ratio: 1
-  dataloader: True
+  dataloader: False
 
 PipelineParams:
   convert_SHs_python: False
