@@ -32,7 +32,7 @@ def render_sets(dataset, opt, pipe, checkpoint, gaussian_dim, time_duration, rot
     scene = Scene(dataset, gaussians, shuffle=False, num_pts=num_pts,
                   num_pts_ratio=num_pts_ratio, time_duration=time_duration)
 
-    (model_params, first_iter) = torch.load(checkpoint)
+    (model_params, first_iter) = torch.load(checkpoint, weights_only=False)
     gaussians.restore(model_params, None)
 
     gaussExtractor = GaussianExtractor(gaussians, render, pipe, bg_color=bg_color)
@@ -103,8 +103,8 @@ if __name__ == "__main__":
             for key1 in host[key].keys():
                 recursive_merge(key1, host[key])
         else:
-            assert hasattr(args, key), key
-            setattr(args, key, host[key])
+            if hasattr(args, key):
+                setattr(args, key, host[key])
 
     for k in cfg.keys():
         recursive_merge(k, cfg)
