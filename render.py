@@ -78,7 +78,8 @@ if __name__ == "__main__":
     pp = PipelineParams(parser)
 
     parser.add_argument("--config", type=str, required=True)
-    parser.add_argument("--start_checkpoint", type=str, required=True)
+    parser.add_argument("--start_checkpoint", type=str, default=None,
+                        help="Path to checkpoint .pth file. If omitted, auto-detected from model_path.")
     parser.add_argument("--quiet", action="store_true")
 
     parser.add_argument("--gaussian_dim", type=int, default=3)
@@ -107,6 +108,21 @@ if __name__ == "__main__":
 
     for k in cfg.keys():
         recursive_merge(k, cfg)
+
+    # Auto-detect checkpoint from model_path if not provided
+    if not args.start_checkpoint:
+        model_path = args.model_path
+        best = os.path.join(model_path, "chkpnt_best.pth")
+        if os.path.exists(best):
+            args.start_checkpoint = best
+        else:
+            candidates = sorted(
+                [f for f in os.listdir(model_path) if f.startswith("chkpnt") and f.endswith(".pth")],
+                key=lambda f: int("".join(filter(str.isdigit, f)) or 0)
+            )
+            assert candidates, f"No checkpoint found in {model_path}"
+            args.start_checkpoint = os.path.join(model_path, candidates[-1])
+        print(f"Auto-detected checkpoint: {args.start_checkpoint}")
 
     print("Rendering " + args.model_path)
     safe_state(args.quiet)
