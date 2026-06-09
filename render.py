@@ -51,9 +51,16 @@ def render_sets(dataset, opt, pipe, checkpoint, gaussian_dim, time_duration, rot
         test_dir = os.path.join(render_base, "test")
         os.makedirs(test_dir, exist_ok=True)
         print("Rendering test cameras ...")
-        gaussExtractor.reconstruction(scene.getTestCameras(), test_dir, stage="validation")
+        test_cameras = scene.getTestCameras()
+        gaussExtractor.reconstruction(test_cameras, test_dir, stage="validation")
         gaussExtractor.export_image(test_dir, mode="validation")
-        print(f"Test renders saved to {test_dir}")
+        create_videos(
+            base_dir=test_dir,
+            input_dir=test_dir,
+            out_name="render_test",
+            num_frames=len(test_cameras)
+        )
+        print(f"Test renders and video saved to {test_dir}")
 
     if render_traj:
         traj_dir = os.path.join(render_base, "traj")
