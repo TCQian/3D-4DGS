@@ -96,7 +96,7 @@ class GaussianExtractor(object):
             static = torch.clamp(static, 0, 1)
                 
             self.rgbmaps.append(rgb.cpu())
-            # self.depthmaps.append(depth.cpu())
+            self.depthmaps.append(depth.cpu())
             # self.flowmaps.append(flow.cpu())
             self.dynamicmaps.append(dynamic.cpu())
             self.staticmaps.append(static.cpu())
@@ -145,14 +145,14 @@ class GaussianExtractor(object):
     def export_image(self, path,mode="validation"):
         render_path = os.path.join(path, "renders")
         gts_path = os.path.join(path, "gt")
-        # vis_path = os.path.join(path, "vis")
+        vis_path = os.path.join(path, "vis")
         dynamic_path = os.path.join(path, "dynamic")
         static_path = os.path.join(path, "static")
         # flow_path=os.path.join(path,"flow")
         os.makedirs(render_path, exist_ok=True)
         os.makedirs(dynamic_path, exist_ok=True)
         os.makedirs(static_path, exist_ok=True)
-        # os.makedirs(vis_path, exist_ok=True)
+        os.makedirs(vis_path, exist_ok=True)
         os.makedirs(gts_path, exist_ok=True)
         # os.makedirs(flow_path,exist_ok=True)
         for idx, viewpoint_cam in tqdm(enumerate(self.viewpoint_stack), desc="export images"):
@@ -163,4 +163,4 @@ class GaussianExtractor(object):
             save_img_u8(self.dynamicmaps[idx].permute(1,2,0).cpu().numpy(), os.path.join(dynamic_path, 'dynamic_{0:05d}'.format(idx) + ".png"))
             save_img_u8(self.staticmaps[idx].permute(1,2,0).cpu().numpy(), os.path.join(static_path, 'static_{0:05d}'.format(idx) + ".png"))
             # save_img_u8(self.flowmaps[idx].permute(1,2,0).cpu().numpy(), os.path.join(flow_path, '{0:05d}'.format(idx) + ".png"))
-            # save_img_f32(self.depthmaps[idx][0].cpu().numpy(), os.path.join(vis_path, 'depth_{0:05d}'.format(idx) + ".tiff"))
+            save_img_f32(self.depthmaps[idx][0].cpu().numpy(), os.path.join(vis_path, 'depth_{0:05d}'.format(idx) + ".tiff"))
